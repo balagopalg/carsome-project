@@ -17,8 +17,12 @@ const productReviews = async (req, res, next): Promise<any>=> {
             WHERE p.active = 1 AND r.product_id = ${productId}
         `
         const result = await customDb(null, query)
-        if(isEmpty(result)) res.send({status: false, message: 'Invalid Product Id'})
+        if(isEmpty(result)) {
+            res.send({status: false, message: 'Invalid Product Id'})
+            return
+        }
         res.send(({status: true, message: 'successful', result}))
+        return
     }
     catch (err) {
         next(err)

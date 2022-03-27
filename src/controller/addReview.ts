@@ -28,11 +28,15 @@ const addReview = async (req, res, next): Promise<any>=> {
             WHERE p.active = 1 AND p.id = ${productId}
         `
         let result = await customDb(null, query)
-        if(isEmpty(result)) res.send({status: false, message: 'Invalid Product Id'})
+        if(isEmpty(result)) {
+            res.send({status: false, message: 'Invalid Product Id'})
+            return
+        }
 
         query = ` ${insertQuery} ${condition} `
         result = await customDb(null, query)
         res.send({status: true, message: 'successful'})
+        return
     }
     catch (err) {
         next(err)

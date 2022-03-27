@@ -13,8 +13,12 @@ const productDetails = async (req, res, next): Promise<any>=> {
             WHERE active = 1
         `
         const result = await customDb(null, query)
-        if(isEmpty(result)) res.send({status: false, message: 'No products found'})
+        if(isEmpty(result)) {
+            res.send({status: false, message: 'No products found'})
+            return
+        }
         res.send({status: true, message: 'successful', result})
+        return
     }
     catch (err) {
         next(err)
