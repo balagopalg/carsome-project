@@ -1,0 +1,33 @@
+{
+  "name": "carsome-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf ./build && tsc && cd build && node index",
+    "start": "nodemon --exec npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balagopalg/carsome-project.git"
+  },
+  "author": "Balagopal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/balagopalg/carsome-project/issues"
+  },
+  "homepage": "https://github.com/balagopalg/carsome-project#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "lodash": "^4.17.21",
+    "mysql": "2.18.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/mysql": "2.15.19",
+    "nodemon": "2.0.12"
+  }
+}
