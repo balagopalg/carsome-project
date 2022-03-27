@@ -20,8 +20,9 @@ app.use('/',route);
 
 
 app.get('/', (req:any, res:any) => {
-  req.send('Server is Up & Healthy!')
+  req.send('Product Feedback Forum!')
 })
+
 app.use((err, req, res, next) => {
   res.status(500).send(`Something broke! - ${err.errObj.sqlMessage} `)
 })
