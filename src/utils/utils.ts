@@ -11,3 +11,7 @@ export const decimalCount = (number: string, limit?: number): boolean => {
     if(text.length - index - 1 > limit) return false
     return true
 }
+
+export const _generateTimestamp = (): number => {
+    return Date.now()
+  }
