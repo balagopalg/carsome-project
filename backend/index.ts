@@ -10,17 +10,17 @@ app.use(
   })
 );
 
-app.all('/', function(req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
+})
 
 app.use('/',route);
 
 
-app.get('/', (Req:any, Res:any) => {
-    Res.send('Server is Up & Healthy!')
+app.get('/', (req:any, res:any) => {
+  req.send('Server is Up & Healthy!')
 })
 app.use((err, req, res, next) => {
   res.status(500).send(`Something broke! - ${err.errObj.sqlMessage} `)
