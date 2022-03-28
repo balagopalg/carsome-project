@@ -12,6 +12,8 @@ declare interface IReview {
   averageRatings: number
   rating: number
   review: string
+  name: string
+  id: number
 }
 
 declare interface ISubmitReviewPayload {

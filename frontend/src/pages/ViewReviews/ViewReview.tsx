@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useOutletContext } from 'react-router-dom'
 import StarRatings from 'react-star-ratings'
@@ -6,6 +7,11 @@ import './viewReview.css'
 type ICurrentProduct = {
   averageRatings: number
   name: string
+}
+const initialSubmitPayload: ISubmitReviewPayload = {
+  productId: 0,
+  rating: 0,
+  review: '',
 }
 function ViewReview(): JSX.Element {
   const [selectedProduct, products] = useOutletContext<[number, IProductInfo[]]>()
@@ -15,11 +21,7 @@ function ViewReview(): JSX.Element {
   })
   const [reviews, setReviews] = useState<IReview[]>([])
   const [showTextArea, setShowTextArea] = useState<boolean>(false)
-  const [submitReviewPayload, setSubmitReviewPayload] = useState<ISubmitReviewPayload>({
-    productId: 0,
-    rating: 0,
-    review: '',
-  })
+  const [submitReviewPayload, setSubmitReviewPayload] = useState<ISubmitReviewPayload>(initialSubmitPayload)
 
   const handleOnBlurInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value
@@ -41,8 +43,22 @@ function ViewReview(): JSX.Element {
     })
       .then((repos) => {
         const response = repos.data as IGetReviewResponse
-        if (response.status) setReviews(response.result)
-        else setReviews([])
+        if (response.status) {
+          setSubmitReviewPayload(initialSubmitPayload)
+          setReviews(response.result)
+          setCurrentProduct({
+            ...currentProduct,
+            averageRatings: response.result[0].averageRatings ?? 0,
+            name: response.result[0].name ?? '',
+          })
+        } else {
+          setReviews([])
+          // eslint-disable-next-line array-callback-return
+          products.map((item) => {
+            if (item.id === selectedProduct)
+              setCurrentProduct({ ...currentProduct, averageRatings: item.averageRatings ?? 0, name: item.name ?? '' })
+          })
+        }
       })
       .catch((error) => {
         console.log('error', error.message)
@@ -68,13 +84,8 @@ function ViewReview(): JSX.Element {
         console.log('error', error.message)
       })
   }
-  useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    selectedProduct !== 0 ? getReviews() : null
-    products.map((item) => {
-      if (item.id === selectedProduct)
-        setCurrentProduct({ ...currentProduct, averageRatings: item.averageRatings ?? 0, name: item.name ?? '' })
-    })
+  useEffect(() => {
+    if (selectedProduct !== 0) getReviews()
   }, [selectedProduct])
 
   return (
@@ -139,7 +150,7 @@ function ViewReview(): JSX.Element {
                   starSpacing="0px"
                 />
                 <div className="margin-left-8px bold">{item.rating},</div>
-                <div className="margin-left-8px color-secondary-navy">{item.review}</div>
+                <div className="margin-left-8px color-secondary-navy word-break-all">{item.review}</div>
               </div>
             )
           })}
@@ -164,7 +175,7 @@ function ViewReview(): JSX.Element {
               Submit Review
             </button>
             <button
-              className="form-submit-button margin-left-8px color-secondary-navy"
+              className="form-submit-button cancel margin-left-8px color-secondary-navy"
               onClick={() => {
                 setShowTextArea(!showTextArea)
               }}

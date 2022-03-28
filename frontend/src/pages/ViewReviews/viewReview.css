@@ -41,6 +41,10 @@
   outline: none;
   border-radius: 4px;
 }
+.form-submit-button.cancel {
+  border: none;
+  background: #f4f4f4;
+}
 .bold {
   font-weight: 700;
 }
@@ -53,6 +57,13 @@
   border: 1px solid #cecece;
   padding: 8px;
   max-width: 560px;
-  min-height: 72px;
+  min-height: 96px;
   resize: none;
+  font-size: 16px;
+}
+.star-ratings {
+  min-width: 120px;
+}
+.word-break-all {
+  word-break: break-all;
 }
