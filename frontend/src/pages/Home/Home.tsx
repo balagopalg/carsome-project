@@ -9,7 +9,7 @@ function Home(): JSX.Element {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:3000/getProducts',
+      url: 'http://localhost:5000/getProducts',
     })
       .then((repos) => {
         const result = repos.data.result as IProductInfo[]

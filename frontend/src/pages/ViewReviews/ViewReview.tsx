@@ -33,7 +33,7 @@ function ViewReview(): JSX.Element {
   const getReviews = () => {
     axios({
       method: 'POST',
-      url: 'http://localhost:3000/getReview',
+      url: 'http://localhost:5000/getReview',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -67,7 +67,7 @@ function ViewReview(): JSX.Element {
   const submitReview = () => {
     axios({
       method: 'POST',
-      url: 'http://localhost:3000/addReview',
+      url: 'http://localhost:5000/addReview',
       headers: {
         'Content-Type': 'application/json',
       },
