@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './home.css'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
@@ -20,8 +20,9 @@ function Home(): JSX.Element {
         console.log('error', error)
       })
   }, [])
-  useMemo(() => {
-    return selectedProduct !== 0 ? navigate(`view-review/:${selectedProduct}`, { replace: true }) : null
+  useEffect(() => {
+    if (selectedProduct !== 0) navigate(`view-review/:${selectedProduct}`, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProduct])
   return (
     <div className="container">
