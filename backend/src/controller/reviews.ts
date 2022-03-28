@@ -9,7 +9,7 @@ const productReviews = async (req, res, next): Promise<any> => {
 
   try {
     let query = `
-            SELECT rating, review,
+            SELECT rating, review, id, name,
             (SELECT ROUND(AVG(rating), 2) FROM Ratings ra WHERE ra.product_id = ${productId}) AS averageRatings 
             FROM Ratings r
             INNER JOIN Products p ON r.product_id = p.id
